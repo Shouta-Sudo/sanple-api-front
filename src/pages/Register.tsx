@@ -1,38 +1,7 @@
-import React, { SyntheticEvent, useState } from 'react'
-import axios from 'axios';
-
-interface RegisterBody {
-    first_name: string,
-    last_name: string,
-    email: string,
-    password: string,
-    password_confirm: string
-}
+import useRegister from '../hooks/useRegister';
 
 const Register = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
-
-    const inputBody: RegisterBody = {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-        password_confirm: passwordConfirm,
-    }
-
-    const submitHandler = async (e: SyntheticEvent) => {
-        e.preventDefault()
-        const res = await axios.post('http://localhost:8000/api/register', inputBody)
-
-
-        console.log(res)
-    }
-
-
+    const { submitHandler, dispatch, setFirstName, setLastName, setEmail, setPassword, setPasswordConfirm } = useRegister()
 
     return (
         <div className='register'>
@@ -41,23 +10,23 @@ const Register = () => {
                 <h1 className="h3 mb-3 font-weight-normal">Please Register</h1>
 
                 <input type="text" className="form-control" placeholder="first Name" required
-                    onChange={e => setFirstName(e.target.value)}
+                    onChange={e => dispatch(setFirstName(e.target.value))}
                 />
 
                 <input type="text" className="form-control" placeholder="Last Name" required
-                    onChange={e => setLastName(e.target.value)}
+                    onChange={e => dispatch(setLastName(e.target.value))}
                 />
 
                 <input type="email" className="form-control" placeholder="Email" required
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => dispatch(setEmail(e.target.value))}
                 />
 
                 <input type="password" className="form-control" placeholder="Password" required
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => dispatch(setPassword(e.target.value))}
                 />
 
                 <input type="password" className="form-control" placeholder="Password Confirm" required
-                    onChange={e => setPasswordConfirm(e.target.value)}
+                    onChange={e => dispatch(setPasswordConfirm(e.target.value))}
                 />
 
                 <button className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
